@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Communicator.cs" />
     <Compile Include="ICommunicator.cs" />
-    <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,7 @@
 ﻿using System.Windows;
+using Mordo.Desktop.Initialize;
+using Mordo.Desktop.ViewModels;
+using Ninject;
 
 namespace Mordo.Desktop.Views
 {
@@ -9,6 +12,7 @@ namespace Mordo.Desktop.Views
     {
         public MainView()
         {
+            this.DataContext = Kernel.Default.Get<MainViewModel>();
             InitializeComponent();
         }
     }

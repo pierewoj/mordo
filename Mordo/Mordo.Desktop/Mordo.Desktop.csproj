@@ -43,6 +43,10 @@
       <HintPath>..\packages\LiveCharts.Wpf.0.7.17\lib\net452\LiveCharts.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.3.10\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
@@ -115,10 +119,15 @@
     </Compile>
     <Compile Include="Converters\ReasonToStringConverter.cs" />
     <Compile Include="Converters\StateToStringConverter.cs" />
+    <Compile Include="Initialize\Bindings.cs" />
+    <Compile Include="Initialize\Kernel.cs" />
     <Compile Include="MessageProcessing\IMessageBuilder.cs" />
     <Compile Include="MessageProcessing\IMessageProcessor.cs" />
     <Compile Include="MessageProcessing\MessageBuilder.cs" />
     <Compile Include="MessageProcessing\MessageProcessor.cs" />
+    <Compile Include="Models\CommandSettings.cs" />
+    <Compile Include="Models\ConnectionSettings.cs" />
+    <Compile Include="Models\Controller.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\RobotState.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

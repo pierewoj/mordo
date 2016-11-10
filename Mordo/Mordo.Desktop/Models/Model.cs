@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Mordo.Desktop.Models
 {
-    abstract class Model : INotifyPropertyChanged
+    public abstract class Model : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

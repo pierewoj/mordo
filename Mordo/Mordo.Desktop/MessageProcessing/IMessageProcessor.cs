@@ -1,10 +1,10 @@
-﻿using Mordo.Bluetooth;
-using Mordo.Desktop.Models;
+﻿using Mordo.Desktop.Models;
+using System.Collections.Generic;
 
 namespace Mordo.Desktop.MessageProcessing
 {
     internal interface IMessageProcessor
     {
-        RobotState ProcessMessage(Message message);
+        void ProcessMessage(string message, RobotState state, ICollection<Controller> controllers);
     }
 }

@@ -7,8 +7,10 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:controls="clr-namespace:Mordo.Desktop.Controls"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:viewModels="clr-namespace:Mordo.Desktop.ViewModels"
         mc:Ignorable="d"
-        Title="MainView">
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel, IsDesignTimeCreatable=True}"
+        Title="Mordo">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -32,37 +34,41 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <GroupBox Header="Prop">
+                <lvc:CartesianChart Grid.Row="0">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis MinValue="-3" MaxValue="3"/>
+                    </lvc:CartesianChart.AxisY>
+
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis ShowLabels="False"/>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </GroupBox>
             
-            <lvc:CartesianChart Grid.Row="0">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis MinValue="-3" MaxValue="3"/>
-                </lvc:CartesianChart.AxisY>
+            <GroupBox Grid.Row="1" Header="Int">
+                <lvc:CartesianChart>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis MinValue="-3" MaxValue="3"/>
+                    </lvc:CartesianChart.AxisY>
 
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis ShowLabels="False"/>
-               </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis ShowLabels="False"/>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </GroupBox>
+            
+            <GroupBox Grid.Row="2" Header="Diff">
+                <lvc:CartesianChart>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis MinValue="-3" MaxValue="3"/>
+                    </lvc:CartesianChart.AxisY>
 
-            <lvc:CartesianChart Grid.Row="1">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis MinValue="-3" MaxValue="3"/>
-                </lvc:CartesianChart.AxisY>
-
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis ShowLabels="False"/>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart Grid.Row="2">
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis MinValue="-3" MaxValue="3"/>
-                </lvc:CartesianChart.AxisY>
-
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis ShowLabels="False"/>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis ShowLabels="False"/>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </GroupBox>
         </Grid>
         
         <Grid Grid.Column="2" Margin="5">
@@ -77,17 +83,17 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Margin="5">
-                <ComboBox/>
-                <xctk:DecimalUpDown></xctk:DecimalUpDown>
-                <Button Content="CONNECT"/>
-                <Button Content="DISCONNECT"/>
+                <ComboBox ItemsSource="{Binding PossiblePorts}" SelectedItem="{Binding ConnectionSettings.Port}"/>
+                <ComboBox ItemsSource="{Binding PossibleBauds}" SelectedItem="{Binding ConnectionSettings.BaudRate}"/>
+                <Button Content="CONNECT" Command="{Binding ConnectCommand}"/>
+                <Button Content="DISCONNECT" Command="{Binding DisconnectCommand}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="5">
-                <Button Content="START AUTO"/>
-                <Button Content="STOP AUTO"/>
-                <Button Content="RESET"/>
-                <Button Content="MANUAL"/>
+                <Button Content="START AUTO" Command="{Binding SendStartAutoCommand}"/>
+                <Button Content="STOP AUTO" Command="{Binding SendStopAutoCommand}"/>
+                <Button Content="RESET" Command="{Binding SendResetCommand}"/>
+                <Button Content="MANUAL" Command="{Binding SendManualCommand}"/>
             </StackPanel>
 
             <Grid Grid.Row="2" Margin="5">
@@ -103,15 +109,15 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <Button Grid.Row="0" Grid.Column="0" Content="O"/>
-                <Button Grid.Row="0" Grid.Column="1" Content="/\"/>
-                <Button Grid.Row="0" Grid.Column="2" Content="C"/>
+                <Button Grid.Row="0" Grid.Column="0" Content="O" Command="{Binding SendOpenFrameCommand}"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="/\" Command="{Binding SendManualForwardCommand}"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="C" Command="{Binding SendCloseFrameCommand}"/>
 
-                <Button Grid.Row="1" Grid.Column="0" Content="&lt;"/>
-                <Button Grid.Row="1" Grid.Column="1" Content="S"/>
-                <Button Grid.Row="1" Grid.Column="2" Content=">"/>
+                <Button Grid.Row="1" Grid.Column="0" Content="&lt;" Command="{Binding SendManualLeftCommand}"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="S" Command="{Binding SendManualStopCommand}"/>
+                <Button Grid.Row="1" Grid.Column="2" Content=">" Command="{Binding SendManualRightCommand}"/>
                 
-                <Button Grid.Row="2" Grid.Column="1" Content="\/"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="\/" Command="{Binding SendManualBackwardCommand}"/>
             </Grid>
 
             <Grid Grid.Row="3" Margin="5">
@@ -131,26 +137,26 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <Button Grid.Row="0" Grid.Column="0" Content="PID F"/>
-                <xctk:DecimalUpDown Grid.Row="0" Grid.Column="1"/>
+                <Button Grid.Row="0" Grid.Column="0" Content="PID F" Command="{Binding SendPidForwardCommand}"/>
+                <xctk:DecimalUpDown Grid.Row="0" Grid.Column="1" Value="{Binding CommandSettings.PidForward}"/>
 
-                <Button Grid.Row="1" Grid.Column="0" Content="PID B"/>
-                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="1"/>
+                <Button Grid.Row="1" Grid.Column="0" Content="PID B" Command="{Binding SendPidBackwardCommand}"/>
+                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="1" Value="{Binding CommandSettings.PidBackward}"/>
 
-                <Button Grid.Row="2" Grid.Column="0" Content="V"/>
-                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1"/>
-                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="2"/>
+                <Button Grid.Row="2" Grid.Column="0" Content="V" Command="{Binding SendPidWheelVelocityCommand}"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Value="{Binding CommandSettings.VelocityLeft}"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="2" Value="{Binding CommandSettings.VelocityRight}"/>
                 
-                <Button Grid.Row="3" Grid.Column="0" Content="SIDE"/>
+                <Button Grid.Row="3" Grid.Column="0" Content="SIDE" Command="{Binding SendPidKtir}"/>
                 
 
-                <Button Grid.Row="4" Grid.Column="0" Content="PWM"/>
-                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1"/>
-                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1"/>
+                <Button Grid.Row="4" Grid.Column="0" Content="PWM" Command="{Binding SendPwmCommand}"/>
+                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1" Value="{Binding CommandSettings.PwmL}"/>
+                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="2" Value="{Binding CommandSettings.PwmR}" />
 
-                <Button Grid.Row="5" Grid.Column="0" Content="STOP F"/>
+                <Button Grid.Row="5" Grid.Column="0" Content="STOP F" Command="{Binding SendStopFastCommand}"/>
                 
-                <Button Grid.Row="6" Grid.Column="0" Content="STOP S"/>
+                <Button Grid.Row="6" Grid.Column="0" Content="STOP S" Command="{Binding SendStopSlowCommand}"/>
             </Grid>
 
             <Grid Grid.Row="4" Margin="5">
@@ -169,30 +175,31 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Regulator"/>
-                <ComboBox Grid.Row="0" Grid.Column="1"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="Controller"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" 
+                           SelectedItem="{Binding SelectedController}" DisplayMemberPath="Name" ItemsSource="{Binding Controllers}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="Diff interval"/>
-                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1"/>
-
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Value="{Binding SelectedController.DiffInterval}"/>
+ 
                 <Label Grid.Row="2" Grid.Column="0" Content="Integral max"/>
-                <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1"/>
+                <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Value="{Binding SelectedController.IntegralMax}"/>
 
                 <Label Grid.Row="3" Grid.Column="0" Content="KP"/>
-                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1"/>
-                <CheckBox Grid.Row="3" Grid.Column="2"/>
+                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1" Value="{Binding SelectedController.Kp}"/>
+                <CheckBox Grid.Row="3" Grid.Column="2" IsChecked="{Binding SelectedController.IsPropEnabled}"/>
 
                 <Label Grid.Row="4" Grid.Column="0" Content="TI"/>
-                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1"/>
-                <CheckBox Grid.Row="4" Grid.Column="2"/>
+                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1" Value="{Binding SelectedController.Ti}"/>
+                <CheckBox Grid.Row="4" Grid.Column="2" IsChecked="{Binding SelectedController.IsIntegralEnabled}"/>
 
                 <Label Grid.Row="5" Grid.Column="0" Content="TD"/>
-                <xctk:DecimalUpDown Grid.Row="5" Grid.Column="1"/>
-                <CheckBox Grid.Row="5" Grid.Column="2"/>
+                <xctk:DecimalUpDown Grid.Row="5" Grid.Column="1" Value="{Binding SelectedController.Td}"/>
+                <CheckBox Grid.Row="5" Grid.Column="2" IsChecked="{Binding SelectedController.IsDiffEnabled}"/>
 
             </Grid>
 
-            <Button Grid.Row="5" Content="SEND"/>
+            <Button Grid.Row="5" Content="SEND" Command="{Binding SendPidSettingsCommand}"/>
 
         </Grid>
     

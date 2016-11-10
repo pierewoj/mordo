@@ -1,12 +1,12 @@
-﻿using Mordo.Bluetooth;
-using Mordo.Desktop.Models;
+﻿using Mordo.Desktop.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Mordo.Desktop.MessageProcessing
 {
     class MessageProcessor : IMessageProcessor
     {
-        public RobotState ProcessMessage(Message message)
+        public void ProcessMessage(string message, RobotState state, ICollection<Controller> controllers)
         {
             throw new NotImplementedException();
         }

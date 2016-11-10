@@ -20,7 +20,7 @@ namespace Mordo.Desktop.ViewModels
         public RelayCommand SendManualLeftCommand { get; set; }
         public RelayCommand SendManualStopCommand { get; set; }
         public RelayCommand SendPidForwardCommand { get; set; }
-        public RelayCommand SendPidBackWardCommand { get; set; }
+        public RelayCommand SendPidBackwardCommand { get; set; }
         public RelayCommand SendPidWheelVelocityCommand { get; set; }
         public RelayCommand SendPidKtir { get; set; }
         public RelayCommand SendPwmCommand { get; set; }
@@ -43,11 +43,11 @@ namespace Mordo.Desktop.ViewModels
             SendManualBackwardCommand = SendMessageCommand(b => b.ManualBackward());
             SendManualLeftCommand = SendMessageCommand(b => b.ManualLeft());
             SendManualStopCommand = SendMessageCommand(b => b.ManualStop());
-            SendPidForwardCommand = SendMessageCommand(b => b.DrivePidForward(0));
-            SendPidBackWardCommand = SendMessageCommand(b => b.DrivePidBackward(0));
-            SendPidWheelVelocityCommand = SendMessageCommand(b => b.DriveConsantWheelVelocity(0, 0));
+            SendPidForwardCommand = SendMessageCommand(b => b.DrivePidForward(CommandSettings.PidForward));
+            SendPidBackwardCommand = SendMessageCommand(b => b.DrivePidBackward(CommandSettings.PidBackward));
+            SendPidWheelVelocityCommand = SendMessageCommand(b => b.DriveConsantWheelVelocity(CommandSettings.VelocityLeft, CommandSettings.VelocityRight));
             SendPidKtir = SendMessageCommand(b => b.SideKtir());
-            SendPwmCommand = SendMessageCommand(b => b.Pwm(0, 0));
+            SendPwmCommand = SendMessageCommand(b => b.Pwm(CommandSettings.PwmL, CommandSettings.PwmR));
             SendStopFastCommand = SendMessageCommand(b => b.StopFast());
             SendStopSlowCommand = SendMessageCommand(b => b.StopSlow());
             SendPidSettingsCommand = SendMessageCommand(b => b.SetSettings());
@@ -76,12 +76,14 @@ namespace Mordo.Desktop.ViewModels
 
         private bool CanExecuteConnectCommand(object o)
         {
-            return !_communicator.IsConnected;
+            return !_communicator.IsConnected 
+                && ConnectionSettings.BaudRate > 0 
+                && ! string.IsNullOrWhiteSpace(ConnectionSettings.Port);
         }
 
         private void ExecuteConnectCommand(object o)
         {
-            _communicator.Connect(0, "");
+            _communicator.Connect(ConnectionSettings.BaudRate, ConnectionSettings.Port);
         }
     }
 }
