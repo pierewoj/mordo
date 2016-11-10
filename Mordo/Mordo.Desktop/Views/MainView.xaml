@@ -4,9 +4,199 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mordo.Desktop"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:controls="clr-namespace:Mordo.Desktop.Controls"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainView" Height="350" Width="525">
+        Title="MainView">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
         
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <controls:BoardControl Grid.Row="0"/>
+            <controls:RobotStatusControl Grid.Row="1"/>
+        </Grid>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <lvc:CartesianChart Grid.Row="0">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="-3" MaxValue="3"/>
+                </lvc:CartesianChart.AxisY>
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis ShowLabels="False"/>
+               </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+            <lvc:CartesianChart Grid.Row="1">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="-3" MaxValue="3"/>
+                </lvc:CartesianChart.AxisY>
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis ShowLabels="False"/>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+            <lvc:CartesianChart Grid.Row="2">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="-3" MaxValue="3"/>
+                </lvc:CartesianChart.AxisY>
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis ShowLabels="False"/>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+        </Grid>
+        
+        <Grid Grid.Column="2" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="5">
+                <ComboBox/>
+                <xctk:DecimalUpDown></xctk:DecimalUpDown>
+                <Button Content="CONNECT"/>
+                <Button Content="DISCONNECT"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="5">
+                <Button Content="START AUTO"/>
+                <Button Content="STOP AUTO"/>
+                <Button Content="RESET"/>
+                <Button Content="MANUAL"/>
+            </StackPanel>
+
+            <Grid Grid.Row="2" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Button Grid.Row="0" Grid.Column="0" Content="O"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="/\"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="C"/>
+
+                <Button Grid.Row="1" Grid.Column="0" Content="&lt;"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="S"/>
+                <Button Grid.Row="1" Grid.Column="2" Content=">"/>
+                
+                <Button Grid.Row="2" Grid.Column="1" Content="\/"/>
+            </Grid>
+
+            <Grid Grid.Row="3" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Row="0" Grid.Column="0" Content="PID F"/>
+                <xctk:DecimalUpDown Grid.Row="0" Grid.Column="1"/>
+
+                <Button Grid.Row="1" Grid.Column="0" Content="PID B"/>
+                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="1"/>
+
+                <Button Grid.Row="2" Grid.Column="0" Content="V"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="2"/>
+                
+                <Button Grid.Row="3" Grid.Column="0" Content="SIDE"/>
+                
+
+                <Button Grid.Row="4" Grid.Column="0" Content="PWM"/>
+                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1"/>
+                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1"/>
+
+                <Button Grid.Row="5" Grid.Column="0" Content="STOP F"/>
+                
+                <Button Grid.Row="6" Grid.Column="0" Content="STOP S"/>
+            </Grid>
+
+            <Grid Grid.Row="4" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Regulator"/>
+                <ComboBox Grid.Row="0" Grid.Column="1"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Diff interval"/>
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Integral max"/>
+                <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="KP"/>
+                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1"/>
+                <CheckBox Grid.Row="3" Grid.Column="2"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="TI"/>
+                <xctk:DecimalUpDown Grid.Row="4" Grid.Column="1"/>
+                <CheckBox Grid.Row="4" Grid.Column="2"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Content="TD"/>
+                <xctk:DecimalUpDown Grid.Row="5" Grid.Column="1"/>
+                <CheckBox Grid.Row="5" Grid.Column="2"/>
+
+            </Grid>
+
+            <Button Grid.Row="5" Content="SEND"/>
+
+        </Grid>
+    
+    
     </Grid>
 </Window>
+
