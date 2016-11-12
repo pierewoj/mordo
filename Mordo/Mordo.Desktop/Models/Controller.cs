@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using LiveCharts;
 
 namespace Mordo.Desktop.Models
 {
     public class Controller : Model
     {
-        public List<decimal> PropReadings { get; }
-        public List<decimal> IntegralReadings { get; }
-        public List<decimal> DiffReadings { get; }
+        public ChartValues<decimal> PropReadings { get; }
+        public ChartValues<decimal> IntegralReadings { get; }
+        public ChartValues<decimal> DiffReadings { get; }
 
         private decimal _kp;
         public decimal Kp
@@ -72,9 +74,9 @@ namespace Mordo.Desktop.Models
             Name = name;
             _maxReadings = maxReadings;
 
-            PropReadings = new List<decimal>();
-            IntegralReadings = new List<decimal>();
-            DiffReadings = new List<decimal>();
+            PropReadings = new ChartValues<decimal>();
+            IntegralReadings = new ChartValues<decimal>();
+            DiffReadings = new ChartValues<decimal>();
         }
 
         public void AddReadings(decimal prop, decimal integral, decimal diff)

@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mordo.Desktop.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Mordo.Desktop.Controls
 {
@@ -20,9 +9,20 @@ namespace Mordo.Desktop.Controls
     /// </summary>
     public partial class BoardControl : UserControl
     {
+        public RobotState RobotState
+        {
+            get { return (RobotState)GetValue(RobotStateProperty); }
+            set { SetValue(RobotStateProperty, value); }
+        }
+
+        public static readonly DependencyProperty RobotStateProperty =
+            DependencyProperty.Register("RobotState", typeof(RobotState),
+              typeof(BoardControl), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public BoardControl()
         {
             InitializeComponent();
+            Root.DataContext = this;
         }
     }
 }

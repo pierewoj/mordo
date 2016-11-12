@@ -1,4 +1,5 @@
-﻿using Mordo.Bluetooth;
+﻿using LiveCharts.Helpers;
+using Mordo.Bluetooth;
 using Mordo.Desktop.MessageProcessing;
 using Mordo.Desktop.Models;
 using System;
@@ -11,7 +12,7 @@ namespace Mordo.Desktop.ViewModels
 {
     partial class MainViewModel : ViewModel
     {
-        private RobotState _robotState;
+        private RobotState _robotState = new RobotState();
         public RobotState RobotState
         {
             get { return _robotState; }
@@ -32,7 +33,7 @@ namespace Mordo.Desktop.ViewModels
             set { _possibleBauds = value; OnPropertyChanged(); }
         }
 
-        private CommandSettings _commandSettings;
+        private CommandSettings _commandSettings = new CommandSettings();
         public CommandSettings CommandSettings
         {
             get { return _commandSettings; }
@@ -75,6 +76,10 @@ namespace Mordo.Desktop.ViewModels
 
         public MainViewModel()
         {
+            SelectedController = new Controller("", 4);
+            SelectedController.AddReadings(1, 1, 1);
+            SelectedController.AddReadings(1, 1, 1);
+            SelectedController.AddReadings(1, 1, 1);
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                 throw new Exception("Default constructor called outside design mode. Check your IOC container");
         }
@@ -93,13 +98,17 @@ namespace Mordo.Desktop.ViewModels
 
         private void BuildControllers()
         {
-            Controllers.Add(new Controller("Controller1", 100));
-            Controllers.Add(new Controller("Controller2", 100));
-            Controllers.Add(new Controller("Controller3", 100));
-            Controllers.Add(new Controller("Controller3", 100));
+            Controllers.Add(new Controller("Controller1", 4));
+            Controllers.Add(new Controller("Controller2", 4));
+            Controllers.Add(new Controller("Controller3", 4));
+            Controllers.Add(new Controller("Controller3", 4));
 
             SelectedController = Controllers.FirstOrDefault();
-
+            var random = new Random();
+            Enumerable.Range(1, 10).ForEach(i => SelectedController.AddReadings(random.Next(3), random.Next(3), random.Next(3)));
+            RobotState.PositionX = 600;
+            RobotState.PositionY = 300;
+            RobotState.Angle = 45;
         }
 
         private void CommunicatorOnDataReceived(object sender, string s)

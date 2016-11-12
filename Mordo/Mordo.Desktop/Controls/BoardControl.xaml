@@ -4,9 +4,57 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mordo.Desktop.Controls"
+             xmlns:converters="clr-namespace:Mordo.Desktop.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="1000" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <converters:RobotStateToPositionXConverter x:Key="RobotStateToPositionXConverter"/>
+        <converters:RobotStateToPositionYConverter x:Key="RobotStateToPositionYConverter"/>
+    </UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="Black" Margin="60" Width="400" Height="400" Name="Root">
+        <Grid>
+            <Rectangle Width="50" Height="50" Fill="Red" Name="RobotRect"
+                       HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding RobotState.Angle}" CenterX="25" CenterY="25"/>
+                        <TranslateTransform X="-25" Y="25"/>
+                        <TranslateTransform 
+                            X="{Binding RobotState, Converter={StaticResource RobotStateToPositionXConverter}}" 
+                            Y="{Binding RobotState, Converter={StaticResource RobotStateToPositionYConverter}}" />
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Grid Name="BoardGrid" Width="400" Height="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="0" Grid.Column="3" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="1" Grid.Column="3" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="2" Grid.Column="3" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="3" Grid.Column="1" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderThickness="1" BorderBrush="Black"/>
+                <Border Grid.Row="3" Grid.Column="3" BorderThickness="1" BorderBrush="Black"/>
+            </Grid>
+        </Grid>
+    </Border>
 </UserControl>

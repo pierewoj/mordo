@@ -117,7 +117,9 @@
     <Compile Include="Controls\RobotStatusControl.xaml.cs">
       <DependentUpon>RobotStatusControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\RobotStateToPositionXConverter.cs" />
     <Compile Include="Converters\ReasonToStringConverter.cs" />
+    <Compile Include="Converters\RoobtStateToPositionYConverter.cs" />
     <Compile Include="Converters\StateToStringConverter.cs" />
     <Compile Include="Initialize\Bindings.cs" />
     <Compile Include="Initialize\Kernel.cs" />
